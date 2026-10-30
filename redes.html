@@ -2,27 +2,686 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Nuestras Redes - Green Village</title>
+    <title>Nuestras Redes - Bambú Venezuela</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" href="https://webheady.com/Green-village/css/style.css">
     <link rel="stylesheet" href="https://webheady.com/Green-village/css/responsive.css">
     <link rel="stylesheet" href="https://webheady.com/Green-village/fonts/flaticon.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Scoped styles strictly for the Nuestras Redes view -->
+    <style>
+        #redes-view-wrapper {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #2d3748;
+            background-color: #ffffff;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        #redes-view-wrapper * {
+            box-sizing: border-box;
+        }
+
+        /* ----------------------------------------------------
+           1. CAROUSEL SECTION ("Nuestras Redes - Conecta con nosotros")
+           ---------------------------------------------------- */
+        .bambu-hero-section {
+            padding: 30px 15px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bambu-carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+            background-color: #1b261a;
+        }
+
+        .bambu-carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bambu-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, transform 1.2s ease;
+            transform: scale(1.05);
+        }
+
+        .bambu-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .bambu-slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .bambu-slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15, 23, 15, 0.3) 0%, rgba(10, 18, 10, 0.65) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px 20px;
+            z-index: 2;
+        }
+
+        .hero-tag-badge {
+            display: inline-block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #a3e635;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 7px 22px;
+            border-radius: 50px;
+            border: 1px solid rgba(163, 230, 53, 0.45);
+            margin-bottom: 16px;
+            backdrop-filter: blur(6px);
+        }
+
+        .hero-title-main {
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            line-height: 1.15;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-title-main span {
+            color: #84cc16;
+            display: block;
+        }
+
+        /* Carousel Navigation Controls */
+        .bambu-carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            color: #1f2937;
+            border: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+
+        .bambu-carousel-control:hover {
+            background: #79A33D;
+            color: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .bambu-carousel-control.control-prev {
+            left: 24px;
+        }
+
+        .bambu-carousel-control.control-next {
+            right: 24px;
+        }
+
+        .bambu-carousel-dots {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .bambu-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+
+        .bambu-dot.active {
+            background: #79A33D;
+            width: 34px;
+            border-radius: 10px;
+            border-color: #79A33D;
+        }
+
+        /* ----------------------------------------------------
+           2. SOCIAL MEDIA CARDS SECTION
+           ---------------------------------------------------- */
+        .bambu-social-section {
+            padding: 10px 15px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bambu-social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .bambu-social-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 42px 30px 38px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 290px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease;
+            position: relative;
+            text-decoration: none !important;
+        }
+
+        .bambu-social-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 42px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Instagram Card: Gradient Border Matching 2.jpeg */
+        .card-instagram {
+            border: 3px solid transparent;
+            background: linear-gradient(#ffffff, #ffffff) padding-box,
+                        linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) border-box;
+        }
+
+        /* Facebook Card: Solid Blue Border Matching 2.jpeg */
+        .card-facebook {
+            border: 3px solid #1877F2;
+        }
+
+        /* X Card: Modern Dark Border (Replaces Pinterest) */
+        .card-x {
+            border: 3px solid #111827;
+        }
+
+        .social-icon-box {
+            width: 76px;
+            height: 76px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .bambu-social-card:hover .social-icon-box {
+            transform: scale(1.1);
+        }
+
+        .social-card-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #557829;
+            margin: 0 0 26px 0;
+            text-transform: uppercase;
+        }
+
+        .social-cta-btn {
+            background-color: #79A33D;
+            color: #ffffff !important;
+            padding: 10px 42px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: all 0.25s ease;
+            border: none;
+            box-shadow: 0 4px 12px rgba(121, 163, 61, 0.35);
+        }
+
+        .bambu-social-card:hover .social-cta-btn {
+            background-color: #63892d;
+            box-shadow: 0 6px 18px rgba(99, 137, 45, 0.5);
+        }
+
+        /* ----------------------------------------------------
+           3. COMMUNITY GALLERY SECTION (INSTAGRAM LIVE FEED)
+           ---------------------------------------------------- */
+        .bambu-gallery-section {
+            padding: 40px 15px 75px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-header-container {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .gallery-main-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: #1f2937;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+        }
+
+        .gallery-main-title span {
+            color: #79A33D;
+        }
+
+        .gallery-subtitle {
+            font-size: 15px;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .bambu-gallery-grid {
+            column-count: 3;
+            column-gap: 28px;
+        }
+
+        .instagram-card-item {
+            break-inside: avoid;
+            margin-bottom: 28px;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e9ece6;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none !important;
+            color: inherit !important;
+            cursor: pointer;
+        }
+
+        .instagram-card-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+        }
+
+        .insta-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 16px;
+            background: #ffffff;
+        }
+
+        .insta-user-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insta-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #79A33D;
+            padding: 1px;
+            background: #ffffff;
+        }
+
+        .insta-username-text {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .insta-verified {
+            color: #79A33D;
+            font-size: 12px;
+        }
+
+        .insta-more-btn {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .insta-media-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 88%;
+            background-color: #f3f4f6;
+            overflow: hidden;
+        }
+
+        .insta-media-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .instagram-card-item:hover .insta-media-img {
+            transform: scale(1.05);
+        }
+
+        .insta-card-content {
+            padding: 14px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .insta-action-icons-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 11px;
+            font-size: 19px;
+            color: #262626;
+        }
+
+        .insta-actions-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .insta-heart-active {
+            color: #e0245e; /* Solid aesthetic red heart matching 2.jpeg */
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .instagram-card-item:hover .insta-heart-active {
+            transform: scale(1.2);
+        }
+
+        .insta-action-item {
+            color: #4b5563;
+            font-size: 18px;
+        }
+
+        .insta-likes-counter {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Strict Truncation of Post Descriptions (line-clamp & ellipsis) */
+        .insta-caption-box {
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #4b5563;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 6px;
+            max-height: 42px;
+        }
+
+        .insta-caption-author {
+            font-weight: 700;
+            color: #111827;
+            margin-right: 5px;
+        }
+
+        .insta-hashtags {
+            color: #0284c7;
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+
+        /* ----------------------------------------------------
+           4. OFFICIAL LIGHT FOOTER MATCHING 2.jpeg
+           ---------------------------------------------------- */
+        .bambu-official-footer {
+            background-color: #f2f4f1;
+            color: #4b5563;
+            padding: 65px 15px 28px;
+            border-top: 1px solid #e2e6e0;
+        }
+
+        .bambu-footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bambu-footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1.3fr;
+            gap: 45px;
+            align-items: start;
+        }
+
+        .bambu-footer-col-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-official-logo {
+            max-height: 64px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 18px;
+            background: #ffffff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-brand-desc {
+            font-size: 14px;
+            line-height: 1.75;
+            color: #555e51;
+            max-width: 330px;
+            margin: 0;
+        }
+
+        .footer-col-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #1f2937;
+            margin: 0 0 22px 0;
+            text-transform: uppercase;
+        }
+
+        .footer-links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links-list li {
+            margin-bottom: 11px;
+        }
+
+        .footer-links-list a {
+            color: #525c4e;
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .footer-links-list a:hover {
+            color: #79A33D;
+            transform: translateX(4px);
+        }
+
+        .footer-contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 15px;
+            font-size: 14.5px;
+            color: #525c4e;
+        }
+
+        .footer-contact-icon {
+            width: 22px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .icon-blue {
+            color: #2563eb;
+        }
+
+        .icon-green {
+            color: #79A33D;
+        }
+
+        .footer-bottom-bar {
+            border-top: 1px solid #dce1da;
+            margin-top: 48px;
+            padding-top: 24px;
+            text-align: center;
+            font-size: 13.5px;
+            color: #6b7280;
+        }
+
+        /* ----------------------------------------------------
+           RESPONSIVE MEDIA QUERIES
+           ---------------------------------------------------- */
+        @media (max-width: 992px) {
+            .hero-title-main {
+                font-size: 42px;
+            }
+            .bambu-carousel-wrapper {
+                height: 400px;
+            }
+            .bambu-social-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            .bambu-social-card {
+                padding: 30px 18px 25px;
+            }
+            .bambu-gallery-grid {
+                column-count: 2;
+                column-gap: 22px;
+            }
+            .bambu-footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title-main {
+                font-size: 32px;
+            }
+            .bambu-carousel-wrapper {
+                height: 320px;
+                border-radius: 16px;
+            }
+            .bambu-carousel-control {
+                width: 38px;
+                height: 38px;
+                font-size: 14px;
+            }
+            .bambu-carousel-control.control-prev { left: 12px; }
+            .bambu-carousel-control.control-next { right: 12px; }
+            .bambu-social-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .gallery-main-title {
+                font-size: 26px;
+            }
+            .bambu-gallery-grid {
+                column-count: 1;
+                column-gap: 0;
+            }
+            .bambu-footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="boxed_wrapper">
-        <header class="main-header" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1030; background-color: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%;">
+        <!-- Top Bar matching 2.jpeg and website header style -->
+        <div class="header-top" style="background-color: #f7f9f6; border-bottom: 1px solid #e8eae6; padding: 7px 0; font-size: 13px; color: #555;">
+            <div class="container clearfix">
+                <div class="top-left pull-left">
+                    <p style="margin: 0;"><i class="fa fa-clock" style="color: #79A33D; margin-right: 6px;"></i> Horario: <strong>10am - 04pm</strong> (Lun - Jue)</p>
+                </div>
+                <div class="top-right pull-right">
+                    <ul class="list" style="margin: 0; padding: 0; list-style: none; display: flex; gap: 20px;">
+                        <li><i class="fa fa-envelope" style="color: #2563eb; margin-right: 6px;"></i> yourmail@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Header Navbar (Strictly preserved intact) -->
+        <header class="main-header" style="position: -webkit-sticky; position: sticky; top: 0; z-index: 1030; background-color: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.08); width: 100%;">
             <div class="header-upper">
                 <div class="container clearfix">
                     <div class="header-inner clearfix">
                         <div class="logo-outer">
-                            <div class="logo"><img src="https://webheady.com/Green-village/images/logo/logo.png" alt="" title=""></div>
+                            <div class="logo"><img src="https://webheady.com/Green-village/images/logo/logo.png" alt="Bambú Venezuela" title="Bambú Venezuela"></div>
                         </div>
                         <nav class="main-menu navbar-expand-lg ml-md-auto">
                             <div class="navbar-header clearfix">
-                                <div class="logo"><img src="https://webheady.com/Green-village/images/logo/logo.png" alt="" title=""></div>
+                                <div class="logo"><img src="https://webheady.com/Green-village/images/logo/logo.png" alt="Bambú Venezuela" title="Bambú Venezuela"></div>
                                 <!-- Toggle Button -->
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-one">
                                     <span class="icon-bar"></span>
@@ -42,62 +701,641 @@
                             </div>
                         </nav>
                         <div class="menu-button">
-                            <a class="btn-style-one">Solicitar Presupuesto</a>
+                            <a class="btn-style-one" href="contacto.html">Solicitar Presupuesto</a>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-        <section id="redes" style="padding: 150px 0; background-color: #f9f9f9; text-align: center; min-height: 60vh;">
-            <div class="container">
-                <div class="sec-title">
-                    <h2 style="font-size: 36px; font-weight: 700; color: #222;">Nuestras <span>Redes</span></h2>
-                    <p style="color: #79A33D; font-size: 24px; font-weight: 600; margin-top: 30px;"><i class="fa fa-tools" style="margin-right: 15px;"></i>Página en construcción</p>
-                </div>
-            </div>
-        </section>
+        <!-- Main Redes View Content Wrapper -->
+        <main id="redes-view-wrapper">
 
-        <!-- Main Footer -->
-        <footer class="main-footer" style="background-color: #2a3127; color: #b3b3b3; padding: 60px 0 20px; font-family: sans-serif;">
-            <div class="container">
-                <div class="row">
-                    <!-- Columna 1 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="footer-widget">
-                            <h4 style="color: #ffffff; margin-bottom: 20px; font-weight: 600;">Green Village</h4>
-                            <p style="line-height: 1.8;">Transformamos espacios con la elegancia y serenidad del bambú. Tu entorno verde ideal empieza aquí.</p>
+            <!-- ==========================================
+                 SECCIÓN 1: CARRUSEL PRINCIPAL
+                 "Nuestras Redes - Conecta con nosotros"
+                 ========================================== -->
+            <section class="bambu-hero-section" aria-label="Carrusel Conecta con Nosotros">
+                <div class="bambu-carousel-wrapper" id="hero-bambu-carousel">
+                    <div class="bambu-carousel-track">
+                        <!-- Slide 1 (Imagen seleccionada 1: Pabellón y Dosel) -->
+                        <div class="bambu-slide active" data-index="0">
+                            <img src="images/carousel/carousel_1.jpg" alt="Estructura y diseño sostenible en bambú" class="bambu-slide-img">
+                            <div class="bambu-slide-overlay">
+                                <span class="hero-tag-badge">NUESTRAS REDES</span>
+                                <h1 class="hero-title-main">Conecta con<span>Nosotros</span></h1>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 (Imagen seleccionada 2: Arquitectura y Cúpula) -->
+                        <div class="bambu-slide" data-index="1">
+                            <img src="images/carousel/carousel_2.jpg" alt="Pabellón orgánico de bambú" class="bambu-slide-img">
+                            <div class="bambu-slide-overlay">
+                                <span class="hero-tag-badge">NUESTRAS REDES</span>
+                                <h2 class="hero-title-main">Conecta con<span>Nosotros</span></h2>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 (Imagen seleccionada 3: Geodésica de Bambú) -->
+                        <div class="bambu-slide" data-index="2">
+                            <img src="images/carousel/carousel_3.jpg" alt="Domo geodésico en bambú venezolano" class="bambu-slide-img">
+                            <div class="bambu-slide-overlay">
+                                <span class="hero-tag-badge">NUESTRAS REDES</span>
+                                <h2 class="hero-title-main">Conecta con<span>Nosotros</span></h2>
+                            </div>
                         </div>
                     </div>
-                    <!-- Columna 2 -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="footer-widget">
-                            <h4 style="color: #ffffff; margin-bottom: 20px; font-weight: 600;">Enlaces Rápidos</h4>
-                            <ul style="list-style: none; padding: 0; line-height: 2;">
-                                <li><a href="index.html" style="color: #b3b3b3; text-decoration: none;">Inicio</a></li>
-                                <li><a href="redes.html" style="color: #b3b3b3; text-decoration: none;">Nuestras redes</a></li>
-                                <li><a href="quienes-somos.html" style="color: #b3b3b3; text-decoration: none;">Quiénes somos</a></li>
-                                <li><a href="contacto.html" style="color: #b3b3b3; text-decoration: none;">Contacto</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Columna 3 -->
-                    <div class="col-lg-4 col-md-12 mb-4">
-                        <div class="footer-widget">
-                            <h4 style="color: #ffffff; margin-bottom: 20px; font-weight: 600;">Contacto</h4>
-                            <p style="margin-bottom: 10px;"><i class="fa fa-envelope" style="margin-right: 10px;"></i> yourmail@gmail.com</p>
-                            <p style="margin-bottom: 10px;"><i class="fa fa-phone" style="margin-right: 10px;"></i> +1 234 567 890</p>
-                            <p style="margin-bottom: 10px;"><i class="fa fa-map-marker-alt" style="margin-right: 10px;"></i> 123 Avenida Bambú, Ciudad Verde</p>
-                        </div>
+
+                    <!-- Botones de Navegación del Carrusel -->
+                    <button class="bambu-carousel-control control-prev" id="carousel-prev-btn" aria-label="Imagen anterior">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="bambu-carousel-control control-next" id="carousel-next-btn" aria-label="Siguiente imagen">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Puntos / Indicadores del Carrusel -->
+                    <div class="bambu-carousel-dots" id="carousel-dots-container">
+                        <span class="bambu-dot active" data-slide="0" aria-label="Ir a diapositiva 1"></span>
+                        <span class="bambu-dot" data-slide="1" aria-label="Ir a diapositiva 2"></span>
+                        <span class="bambu-dot" data-slide="2" aria-label="Ir a diapositiva 3"></span>
                     </div>
                 </div>
-                <div class="footer-bottom" style="border-top: 1px solid #3f473c; margin-top: 30px; padding-top: 20px; text-align: center;">
-                    <p style="margin: 0; font-size: 14px;">&copy; 2026 Green Village. Todos los derechos reservados.</p>
+            </section>
+
+
+            <!-- ==========================================
+                 SECCIÓN 2: TARJETAS DE REDES SOCIALES
+                 Instagram, Facebook y X (reemplaza Pinterest)
+                 ========================================== -->
+            <section class="bambu-social-section" aria-label="Tarjetas de Redes Sociales">
+                <div class="bambu-social-grid">
+                    
+                    <!-- Tarjeta 1: INSTAGRAM -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="bambu-social-card card-instagram" aria-label="Seguir a Bambú Venezuela en Instagram">
+                        <div class="social-icon-box">
+                            <!-- Logotipo Oficial Vectorial de Instagram -->
+                            <svg viewBox="0 0 512 512" width="68" height="68" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="instaGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#f09433"/>
+                                        <stop offset="25%" stop-color="#e6683c"/>
+                                        <stop offset="50%" stop-color="#dc2743"/>
+                                        <stop offset="75%" stop-color="#cc2366"/>
+                                        <stop offset="100%" stop-color="#bc1888"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect width="512" height="512" rx="120" fill="url(#instaGrad)"/>
+                                <path d="M340 130H172c-23.2 0-42 18.8-42 42v168c0 23.2 18.8 42 42 42h168c23.2 0 42-18.8 42-42V172c0-23.2-18.8-42-42-42zm14 210c0 7.7-6.3 14-14 14H172c-7.7 0-14-6.3-14-14V172c0-7.7 6.3-14 14-14h168c7.7 0 14 6.3 14 14v168z" fill="#ffffff"/>
+                                <circle cx="256" cy="256" r="62" fill="none" stroke="#ffffff" stroke-width="28"/>
+                                <circle cx="335" cy="177" r="15" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <h3 class="social-card-name">INSTAGRAM</h3>
+                        <span class="social-cta-btn">SEGUIR</span>
+                    </a>
+
+                    <!-- Tarjeta 2: FACEBOOK -->
+                    <a href="https://www.facebook.com/share/1CDtLgJuPf/" target="_blank" rel="noopener noreferrer" class="bambu-social-card card-facebook" aria-label="Seguir a Bambú Venezuela en Facebook">
+                        <div class="social-icon-box">
+                            <!-- Logotipo Oficial Vectorial de Facebook -->
+                            <svg viewBox="0 0 512 512" width="68" height="68" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="256" cy="256" r="256" fill="#1877F2"/>
+                                <path d="M336 256h-53v187h-77V256h-37v-66h37v-43c0-36.6 22.4-56.6 55.1-56.6 15.7 0 29.2 1.2 33.1 1.7v38.4h-22.7c-17.8 0-21.2 8.5-21.2 20.8v38.7h42.5l-5.8 66z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <h3 class="social-card-name">FACEBOOK</h3>
+                        <span class="social-cta-btn">SEGUIR</span>
+                    </a>
+
+                    <!-- Tarjeta 3: X (Twitter - Reemplaza Pinterest según instrucción estricta) -->
+                    <a href="https://x.com/BambuVzla" target="_blank" rel="noopener noreferrer" class="bambu-social-card card-x" aria-label="Seguir a Bambú Venezuela en X">
+                        <div class="social-icon-box">
+                            <!-- Logotipo Oficial Vectorial de X (Twitter) -->
+                            <svg viewBox="0 0 512 512" width="68" height="68" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="512" height="512" rx="120" fill="#000000"/>
+                                <path d="M356.6 128h49.6l-108.4 123.9L425.4 384h-99.8l-78.1-102.1L158 384h-49.6l115.9-132.5L101 128h102.3l70.7 93.5L356.6 128zm-17.4 226.4h27.5L188.7 155.8h-29.5l180 198.6z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <h3 class="social-card-name">X</h3>
+                        <span class="social-cta-btn">SEGUIR</span>
+                    </a>
+
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 SECCIÓN 3: GALERÍA DE NUESTRA COMUNIDAD EN VIVO
+                 Últimas 10 publicaciones de Instagram (@bambuvzla)
+                 ========================================== -->
+            <section class="bambu-gallery-section" aria-label="Galería de la Comunidad en Vivo">
+                <div class="gallery-header-container">
+                    <h2 class="gallery-main-title">GALERÍA DE <span>NUESTRA COMUNIDAD EN VIVO</span></h2>
+                    <p class="gallery-subtitle">Explora nuestras últimas publicaciones, proyectos y novedades directas desde Instagram <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" style="color: #79A33D; font-weight: 700; text-decoration: none;">@bambuvzla</a></p>
+                </div>
+
+                <!-- Grid de 10 Publicaciones -->
+                <div class="bambu-gallery-grid" id="instagram-feed-grid">
+                    
+                    <!-- Post 1 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_1.jpg" alt="Sendero ecológico en bambú" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,248 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Sendero y escalinatas ecológicas en bambú curado, armonizando la arquitectura paisajística con los entornos venezolanos.
+                            </div>
+                            <span class="insta-hashtags">#BambuVenezuela #ArquitecturaSostenible</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 2 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_2.jpg" alt="Artesanos construyendo pérgola" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,023 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Maestros constructores levantando pérgola monumental en bambú de alta resistencia sobre terrazas de piedra.
+                            </div>
+                            <span class="insta-hashtags">#BambuArtesanal #IngenieriaNatural</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 3 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_3.jpg" alt="Cabaña de bambú sostenible" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,514 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Cabaña ecológica integral con estructura de guadua y caña brava. Confort térmico, durabilidad y paz garantizada.
+                            </div>
+                            <span class="insta-hashtags">#EcoHogar #ConstruccionVerde</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 4 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_4.jpg" alt="Varas de bambú curadas" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 892 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Proceso de selección y curado orgánico de varas maduras listas para proyectos estructurales de alta exigencia.
+                            </div>
+                            <span class="insta-hashtags">#CalidadBambu #ProcesoArtesanal</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 5 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_5.jpg" alt="Unión y ensamble de precisión en bambú" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,180 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Detalle de ensamble radial y herrajes sismo-resistentes diseñados para estructuras curvas y domos geodésicos.
+                            </div>
+                            <span class="insta-hashtags">#IngenieriaVerde #InnovacionBambu</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 6 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_6.jpg" alt="Baranda panorámica de bambú" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,340 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Barandilla perimetral con acabado pulido y barniz ecológico para terraza exterior con vista panorámica.
+                            </div>
+                            <span class="insta-hashtags">#DisenoExterior #TerrazaSostenible</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 7 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_7.jpg" alt="Panel y celosía decorativa" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 745 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Panel divisorio y celosía decorativa en caña brava tejida. Elegancia, ventilación cruzada y privacidad.
+                            </div>
+                            <span class="insta-hashtags">#InteriorismoSostenible #Decoracion</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 8 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_8.jpg" alt="Estructura de dos pisos en bambú" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,920 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Proyecto habitacional de 2 niveles en plena ejecución. El acero vegetal demuestra su fuerza y versatilidad.
+                            </div>
+                            <span class="insta-hashtags">#BambuEstructural #VenezuelaVerde</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 9 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_9.jpg" alt="Cubierta en tejas de bambú" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 1,065 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Sistema artesanal de tejas en bambú laminado para cubiertas de máxima impermeabilidad y belleza visual.
+                            </div>
+                            <span class="insta-hashtags">#Bioconstruccion #TechosEcologicos</span>
+                        </div>
+                    </a>
+
+                    <!-- Post 10 -->
+                    <a href="https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                        <div class="insta-card-header">
+                            <div class="insta-user-box">
+                                <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                            </div>
+                            <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                        </div>
+                        <div class="insta-media-frame">
+                            <img src="images/instagram/post_10.jpg" alt="Despacho de bambú maduro" class="insta-media-img" loading="lazy">
+                        </div>
+                        <div class="insta-card-content">
+                            <div class="insta-action-icons-row">
+                                <div class="insta-actions-left">
+                                    <i class="fas fa-heart insta-heart-active" title="Me gusta"></i>
+                                    <i class="far fa-comment insta-action-item"></i>
+                                    <i class="far fa-paper-plane insta-action-item"></i>
+                                </div>
+                                <i class="far fa-bookmark insta-action-item"></i>
+                            </div>
+                            <div class="insta-likes-counter">
+                                <i class="fas fa-heart text-danger"></i> 2,340 Me gusta
+                            </div>
+                            <div class="insta-caption-box">
+                                <span class="insta-caption-author">bambuvzla</span> Cosecha sustentable de bambú venezolano rumbo a nuevos proyectos. ¡Gracias a nuestra comunidad por sumarse al cambio!
+                            </div>
+                            <span class="insta-hashtags">#ComunidadBambu #HechoEnVenezuela</span>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ==========================================
+             SECCIÓN 4: FOOTER OFICIAL
+             Estructura exacta del boceto 2.jpeg con logo.jpeg
+             ========================================== -->
+        <footer class="bambu-official-footer" id="contacto">
+            <div class="bambu-footer-container">
+                <div class="bambu-footer-grid">
+                    
+                    <!-- Columna 1: Logotipo Oficial y Descripción -->
+                    <div class="bambu-footer-col-brand">
+                        <img src="logo.jpeg" alt="Logotipo Oficial Bambú Venezuela" class="footer-official-logo">
+                        <p class="footer-brand-desc">
+                            Líderes en arquitectura, diseño y estructuras sostenibles en bambú en Venezuela. Transformamos espacios respetando la armonía de la naturaleza.
+                        </p>
+                    </div>
+
+                    <!-- Columna 2: Enlaces Rápidos -->
+                    <div class="bambu-footer-col-links">
+                        <h4 class="footer-col-title">ENLACES RÁPIDOS</h4>
+                        <ul class="footer-links-list">
+                            <li><a href="index.html">Inicio</a></li>
+                            <li><a href="redes.html" style="color: #79A33D; font-weight: 700;">Nuestras redes</a></li>
+                            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+                            <li><a href="servicios.html">Servicios</a></li>
+                            <li><a href="contacto.html">Contacto</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna 3: Información de Contacto -->
+                    <div class="bambu-footer-col-contact">
+                        <h4 class="footer-col-title">CONTACTO</h4>
+                        <ul class="footer-contact-list">
+                            <li class="footer-contact-item">
+                                <i class="fa fa-envelope footer-contact-icon icon-blue"></i>
+                                <span>yourmail@gmail.com</span>
+                            </li>
+                            <li class="footer-contact-item">
+                                <i class="fa fa-phone footer-contact-icon icon-blue"></i>
+                                <span>(00) 525-3530</span>
+                            </li>
+                            <li class="footer-contact-item">
+                                <i class="fa fa-map-marker-alt footer-contact-icon icon-green"></i>
+                                <span>Venezuela (Lun - Jue 10am - 04pm)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Barra inferior de Copyright -->
+                <div class="footer-bottom-bar">
+                    <p style="margin: 0;">&copy; 2026 BAMBÚ VENEZUELA. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>
+
     </div>
+
+    <!-- Scripts Esenciales -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script Interactivo del Carrusel & Gestor de Feed -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // ------------------------------------------------
+            // 1. Lógica Interactiva del Carrusel Principal
+            // ------------------------------------------------
+            const slides = document.querySelectorAll('#hero-bambu-carousel .bambu-slide');
+            const dots = document.querySelectorAll('#carousel-dots-container .bambu-dot');
+            const prevBtn = document.getElementById('carousel-prev-btn');
+            const nextBtn = document.getElementById('carousel-next-btn');
+            let currentSlide = 0;
+            let autoSlideInterval = null;
+
+            function goToSlide(index) {
+                if (slides.length === 0) return;
+                slides[currentSlide].classList.remove('active');
+                if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+                
+                currentSlide = (index + slides.length) % slides.length;
+                
+                slides[currentSlide].classList.add('active');
+                if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+            }
+
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+
+            function startAutoPlay() {
+                stopAutoPlay();
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+
+            function stopAutoPlay() {
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = null;
+                }
+            }
+
+            if (nextBtn) nextBtn.addEventListener('click', function () {
+                nextSlide();
+                startAutoPlay();
+            });
+
+            if (prevBtn) prevBtn.addEventListener('click', function () {
+                prevSlide();
+                startAutoPlay();
+            });
+
+            dots.forEach(function (dot, idx) {
+                dot.addEventListener('click', function () {
+                    goToSlide(idx);
+                    startAutoPlay();
+                });
+            });
+
+            const carouselWrapper = document.getElementById('hero-bambu-carousel');
+            if (carouselWrapper) {
+                carouselWrapper.addEventListener('mouseenter', stopAutoPlay);
+                carouselWrapper.addEventListener('mouseleave', startAutoPlay);
+            }
+
+            startAutoPlay();
+
+            // ------------------------------------------------
+            // 2. Gestor de Feed Dinámico con Fallback Seguro
+            // ------------------------------------------------
+            // Si en el futuro se proporciona un endpoint JSON de Instagram o webhook,
+            // esta función permite actualizar dinámicamente las publicaciones sin romper
+            // la maquetación visual ni los contadores de likes.
+            window.BambuFeedManager = {
+                refreshFeed: function (customPosts) {
+                    if (!Array.isArray(customPosts) || customPosts.length === 0) return;
+                    const grid = document.getElementById('instagram-feed-grid');
+                    if (!grid) return;
+                    
+                    // Renderiza dinámicamente asegurando truncado y fallback de likes
+                    grid.innerHTML = customPosts.slice(0, 10).map(function (post) {
+                        const likesText = post.likes ? `${post.likes} Me gusta` : '';
+                        const heartIcon = '<i class="fas fa-heart text-danger"></i>';
+                        const likesDisplay = likesText ? `${heartIcon} ${likesText}` : heartIcon;
+                        
+                        return `
+                        <a href="${post.url || 'https://www.instagram.com/bambuvzla?cplk=MTdhb2piY2wxcmZ6'}" target="_blank" rel="noopener noreferrer" class="instagram-card-item">
+                            <div class="insta-card-header">
+                                <div class="insta-user-box">
+                                    <img src="logo.jpeg" alt="bambuvzla" class="insta-avatar">
+                                    <span class="insta-username-text">bambuvzla <i class="fas fa-check-circle insta-verified"></i></span>
+                                </div>
+                                <span class="insta-more-btn"><i class="fas fa-ellipsis-h"></i></span>
+                            </div>
+                            <div class="insta-media-frame">
+                                <img src="${post.image}" alt="Post de Bambú Venezuela" class="insta-media-img" loading="lazy">
+                            </div>
+                            <div class="insta-card-content">
+                                <div class="insta-action-icons-row">
+                                    <div class="insta-actions-left">
+                                        <i class="fas fa-heart insta-heart-active"></i>
+                                        <i class="far fa-comment insta-action-item"></i>
+                                        <i class="far fa-paper-plane insta-action-item"></i>
+                                    </div>
+                                    <i class="far fa-bookmark insta-action-item"></i>
+                                </div>
+                                <div class="insta-likes-counter">
+                                    ${likesDisplay}
+                                </div>
+                                <div class="insta-caption-box">
+                                    <span class="insta-caption-author">bambuvzla</span> ${post.caption || ''}
+                                </div>
+                                <span class="insta-hashtags">#BambuVenezuela #Comunidad</span>
+                            </div>
+                        </a>`;
+                    }).join('');
+                }
+            };
+        });
+    </script>
 </body>
 </html>
